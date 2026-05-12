@@ -23,6 +23,7 @@ Este projeto implementa e compara diferentes algoritmos de ordenação, utilizan
 
 ![ordenacao](./assets/ordenacao.png)
 
+
 ## Instalação 
 **Linguagem**: Python
 
