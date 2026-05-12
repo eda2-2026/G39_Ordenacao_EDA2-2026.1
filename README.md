@@ -15,7 +15,7 @@ Este projeto implementa e compara diferentes algoritmos de ordenação, utilizan
 
 ## Vídeo de Apresentação
 
-![Vídeo de Apresentação](https://youtu.be/GkRX3VKrQcM?si=C6AtXPObnEzB8kyI)
+[Vídeo de Apresentação](https://youtu.be/GkRX3VKrQcM?si=C6AtXPObnEzB8kyI)
 
 ## Screenshots
 
