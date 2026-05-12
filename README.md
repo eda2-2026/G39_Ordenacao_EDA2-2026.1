@@ -13,6 +13,10 @@
 
 Este projeto implementa e compara diferentes algoritmos de ordenação, utilizando uma base de dados de aniversariantes. O objetivo é demonstrar a aplicação prática de algoritmos de ordenação como Bubble Sort, Insertion Sort, Selection Sort, Shell Sort, Merge Sort e Quick Sort, permitindo ordenar registros de pessoas por diversos critérios (nome, idade, data de nascimento).
 
+## Vídeo de Apresentação
+
+![Vídeo de Apresentação](https://youtu.be/GkRX3VKrQcM?si=C6AtXPObnEzB8kyI)
+
 ## Screenshots
 
 ![menu](./assets/menu.png)
