@@ -10,19 +10,37 @@
 | 211063256 |  Victor Hugo Rodrigues Guimarães |
 
 ## Sobre 
-Descreva os objetivos do seu projeto e como ele funciona. 
+
+Este projeto implementa e compara diferentes algoritmos de ordenação, utilizando uma base de dados de aniversariantes. O objetivo é demonstrar a aplicação prática de algoritmos de ordenação como Bubble Sort, Insertion Sort, Selection Sort, Shell Sort, Merge Sort e Quick Sort, permitindo ordenar registros de pessoas por diversos critérios (nome, idade, data de nascimento).
 
 ## Screenshots
-Adicione 3 ou mais screenshots do projeto em funcionamento.
+
+![menu](./assets/menu.png)
+
+
+![benchmark](./assets/benchmark.png)
+
+
+![ordenacao](./assets/ordenacao.png)
 
 ## Instalação 
-**Linguagem**: Python<br>
+**Linguagem**: Python
 
 ## Pré-requisitos
-Liste os pré-requisitos para rodar seu projeto, como bibliotecas, frameworks, etc.
+- Python 3.7 ou superior
+- Nenhuma biblioteca externa é necessária (utiliza apenas módulos da biblioteca padrão do Python)
 
 ## Uso 
-Explique como usar seu projeto caso haja algum passo a passo após o comando de execução.
+Execute o programa com:
+```bash
+python main.py
+```
+
+O programa carrega a base de dados de aniversariantes do arquivo `aniversariantes.csv` e oferece opções para:
+- Ordenar por nome, idade ou data de nascimento
+- Escolher diferentes algoritmos de ordenação (Bubble Sort, Insertion Sort, Selection Sort, Shell Sort, Merge Sort, Quick Sort)
+- Visualizar os tempos de execução para comparar a performance de cada algoritmo
 
 ## Outros 
-Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
+- O arquivo `aniversariantes.csv` contém dados de pessoas com nome, dia, mês e ano de nascimento
+- A idade é calculada automaticamente com base na data de referência (01/01/2026)

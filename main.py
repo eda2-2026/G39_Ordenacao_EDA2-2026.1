@@ -14,7 +14,7 @@ class Aniversariante:
         self.idade = self._calcular_idade()
 
     def _calcular_idade(self) -> int:
-        hoje = date(2026, 1, 1)
+        hoje = date.today()
         anos = hoje.year - self.ano
         if (self.mes, self.dia) > (hoje.month, hoje.day):
             anos -= 1
@@ -112,13 +112,13 @@ def quick_sort(lista: list, chave: Callable, reverso=False) -> list:
     arr = lista[:]
     _qs(arr, 0, len(arr)-1, chave, reverso)
     return arr
-
-
+ 
+ 
 def _qs(arr, low, high, chave, reverso):
     if low < high:
         meio = (low + high) // 2
         candidatos = [(chave(arr[low]), low), (chave(arr[meio]), meio), (chave(arr[high]), high)]
-        candidatos.sort()
+        candidatos.sort(key=lambda x: x[0])
         pi = candidatos[1][1]
         arr[pi], arr[high] = arr[high], arr[pi]
         pivo = chave(arr[high])
@@ -164,7 +164,7 @@ def counting_sort(lista: list, chave: Callable, reverso=False) -> list:
     try:
         vals = [int(chave(p)) for p in lista]
     except (TypeError, ValueError):
-        print("  ⚠ Counting Sort requer chave inteira. Usando Merge Sort como fallback.")
+        print("Counting Sort requer chave inteira. Usando Merge Sort como fallback.")
         return merge_sort(lista, chave, reverso)
 
     minv, maxv = min(vals), max(vals)
@@ -186,7 +186,7 @@ def bucket_sort(lista: list, chave: Callable, reverso=False) -> list:
     try:
         vals = [int(chave(p)) for p in lista]
     except (TypeError, ValueError):
-        print("  ⚠ Bucket Sort requer chave inteira. Usando Merge Sort como fallback.")
+        print("Bucket Sort requer chave inteira. Usando Merge Sort como fallback.")
         return merge_sort(lista, chave, reverso)
 
     minv, maxv = min(vals), max(vals)
@@ -195,7 +195,7 @@ def bucket_sort(lista: list, chave: Callable, reverso=False) -> list:
     for p, v in zip(lista, vals):
         baldes[v - minv].append(p)
 
-    # ordena dentro de cada balde (para chave composta futura)
+    # ordena dentro de cada balde (para chave composta)
     resultado = []
     ordem = range(n_baldes) if not reverso else range(n_baldes-1, -1, -1)
     for i in ordem:
@@ -210,16 +210,16 @@ def radix_sort(lista: list, chave: Callable, reverso=False) -> list:
     try:
         vals = [int(chave(p)) for p in lista]
     except (TypeError, ValueError):
-        print(" Radix Sort requer chave inteira. Usando Merge Sort como fallback.")
+        print("Radix Sort requer chave inteira. Usando Merge Sort como fallback.")
         return merge_sort(lista, chave, reverso)
-
-    offset = min(vals) if min(vals) < 0 else 0
+ 
+    offset = min(vals)
     vals = [v - offset for v in vals]
-
+ 
     max_val = max(vals) if vals else 0
     exp = 1
     arr = list(zip(lista, vals))
-
+ 
     while max_val // exp > 0:
         baldes = [[] for _ in range(10)]
         for obj, v in arr:
@@ -228,7 +228,7 @@ def radix_sort(lista: list, chave: Callable, reverso=False) -> list:
         for b in baldes:
             arr.extend(b)
         exp *= 10
-
+ 
     resultado = [obj for obj, _ in arr]
     return resultado if not reverso else resultado[::-1]
 
@@ -261,7 +261,7 @@ def popular_aleatorio(n: int = 20):
 def popular_arquivo(caminho: str):
     global banco
     if not os.path.exists(caminho):
-        print(f"  ✗ Arquivo não encontrado: {caminho}"); return
+        print(f"Arquivo não encontrado: {caminho}"); return
     banco = []
     erros = 0
     with open(caminho, encoding="utf-8") as f:
@@ -271,7 +271,7 @@ def popular_arquivo(caminho: str):
                     banco.append(Aniversariante.from_csv_line(linha))
                 except ValueError:
                     erros += 1
-    print(f"  ✔ {len(banco)} registros carregados. Erros ignorados: {erros}.")
+    print(f"{len(banco)} registros carregados. Erros ignorados: {erros}.")
 
 
 def exportar_csv(caminho: str = "aniversariantes.csv"):
@@ -281,7 +281,7 @@ def exportar_csv(caminho: str = "aniversariantes.csv"):
         f.write("# nome,dia,mes,ano\n")
         for p in banco:
             f.write(p.to_csv_line() + "\n")
-    print(f"  ✔ Exportado para '{caminho}' ({len(banco)} registros).")
+    print(f"Exportado para '{caminho}' ({len(banco)} registros).")
 
 
 def cadastrar():
@@ -298,7 +298,7 @@ def cadastrar():
     except ValueError:
         print("  Data inválida."); return
     banco.append(Aniversariante(nome, dia, mes, ano))
-    print(f"  ✔ '{nome}' cadastrado.")
+    print(f"'{nome}' cadastrado.")
 
 
 def teste_estabilidade():
@@ -322,23 +322,22 @@ def teste_estabilidade():
     for p in passo2:
         print(f"  {p}")
     print(sep)
-    print("  ✔ Estabilidade verificada: meses preservados dentro de cada ano.")
+    print("Estabilidade verificada: meses preservados dentro de cada ano.")
 
 def benchmark():
     if not banco:
         print("\n  Popule o banco antes do benchmark.")
         return
-
+ 
     chave_comp    = lambda p: p.data_tuple()
     chave_distrib = lambda p: p.ano
-    _distrib_keys = {"8", "9", "10"}
-
+ 
     print(f"\n  Benchmark — {len(banco)} registros")
     print(f"  Comparação: chave=Data Completa | Distribuição: chave=Ano\n")
     print(f"  {'Algoritmo':<20} {'Tempo (ms)':>12}")
     print("  " + "─"*34)
     for k, (nome, fn) in ALGORITMOS.items():
-        chave = chave_distrib if k in _distrib_keys else chave_comp
+        chave = chave_distrib if k in _DISTRIB else chave_comp
         inicio = time.perf_counter()
         for _ in range(100):
             fn(banco, chave)
@@ -403,10 +402,10 @@ def menu_ordenar():
 
     print("\n  ── Chave de Ordenação ──")
     for k, (nome, _) in CHAVES.items():
-        aviso = " ✔ (recomendado para distribuição)" if (alg_k in _DISTRIB and k in _CHAVES_INT) else ""
+        aviso = "(recomendado para distribuição)" if (alg_k in _DISTRIB and k in _CHAVES_INT) else ""
         print(f"    [{k}] {nome}{aviso}")
     if alg_k in _DISTRIB:
-        print("    ℹ Algoritmos de distribuição funcionam melhor com chaves inteiras (3-6).")
+        print("Algoritmos de distribuição funcionam melhor com chaves inteiras (3-6).")
     ch_k = input("  Escolha: ").strip()
     if ch_k not in CHAVES:
         print("  Inválido."); return
@@ -426,7 +425,7 @@ def menu_ordenar():
 def main():
     while True:
         print("\n" + "═"*58)
-        print("   SISTEMA DE ANIVERSARIANTES  —  VERSÃO FINAL")
+        print("   SISTEMA DE ANIVERSARIANTES  ")
         print(f"   Registros carregados: {len(banco)}")
         print("═"*58)
         print("  [1]  Cadastrar manualmente")
